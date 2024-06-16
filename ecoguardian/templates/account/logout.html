@@ -1,0 +1,68 @@
+{% load allauth i18n %}
+
+{% block content %}
+    <style>
+        body, html {
+            font-family: 'Montserrat', sans-serif;
+            height: 100%;
+            margin: 0;
+            background-color: #c4df9b; /* Light green background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100%;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff; /* White container background */
+            border-radius: 15px; /* Rounded corners */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Soft shadow */
+            padding: 40px;
+            width: 400px;
+            max-width: 80%; /* Limit container width */
+        }
+
+        h1 {
+            color: #026537; /* Dark green heading */
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .button-style {
+            display: inline-block;
+            padding: 12px 24px; /* Larger button padding */
+            background-color: #ff6666; /* Red button */
+            color: white;
+            text-decoration: none;
+            border-radius: 30px; /* Round button corners */
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .button-style:hover {
+            background-color: #ff4d4d; /* Darker red on hover */
+        }
+    </style>
+
+    <div class="container">
+        <h1>{% trans "Sign Out" %}</h1>
+        <p>{% trans 'Are you sure you want to sign out?' %}</p>
+        {% url 'account_logout' as action_url %}
+        <form method="post" action="{{ action_url }}">
+            {% csrf_token %}
+            {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+            <button type="submit" class="button-style">{% trans 'Sign Out' %}</button>
+        </form>
+    </div>
+{% endblock content %}

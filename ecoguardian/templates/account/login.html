@@ -1,0 +1,127 @@
+{% load i18n %}
+{% load allauth account %}
+
+
+{% block content %}
+    <style>
+        body, html {
+            font-family: 'Montserrat', sans-serif;
+            height: 100%;
+            margin: 0;
+            background-color: #c4df9b; /* Light green background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100%;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff; /* White container background */
+            border-radius: 15px; /* Rounded corners */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Soft shadow */
+            padding: 40px;
+            width: 400px;
+            max-width: 80%; /* Limit container width */
+        }
+
+        h1 {
+            color: #026537; /* Dark green heading */
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .button-style {
+            display: inline-block;
+            padding: 12px 24px; /* Larger button padding */
+            background-color: #70ad47; /* Dark green button */
+            color: white;
+            text-decoration: none;
+            border-radius: 30px; /* Round button corners */
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .button-style:hover {
+            background-color: #4e7d3e; /* Darker green on hover */
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left; /* Align form elements to the left */
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555; /* Label color */
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="password"]:focus {
+            border-color: #70ad47; /* Dark green border color on focus */
+        }
+
+        .form-actions {
+            text-align: center;
+        }
+
+        .signup-link {
+            color: #007bff; /* Link color */
+            text-decoration: underline;
+            font-size: 16px;
+        }
+
+        .signup-link:hover {
+            color: #0056b3; /* Darker link color on hover */
+        }
+
+    </style>
+
+    <div class="container">
+        <h1>Sign In</h1>
+        <p>If you have not created an account yet, then please <a href="{{ signup_url }}" class="signup-link">sign up</a> first.</p>
+        {% url 'account_login' as login_url %}
+        <form method="post" action="{{ login_url }}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_login">Username</label>
+                {{ form.login }}
+            </div>
+            <div class="form-group">
+                <label for="id_password">Password</label>
+                {{ form.password }}
+            </div>
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            <div class="form-actions">
+                <button type="submit" class="button-style">Sign In</button>
+                
+            </div>
+        </form>
+        {% if SOCIALACCOUNT_ENABLED %}
+            {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+        {% endif %}
+    </div>
+{% endblock content %}

@@ -1,0 +1,109 @@
+{% load i18n %}
+{% load allauth %}
+
+{% block content %}
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #c4df9b;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .connect-heading, .signin-heading {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .connect-heading h1, .signin-heading h1 {
+            color: #026537;
+        }
+
+        .connect-info, .signin-info {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-container {
+            text-align: center;
+        }
+
+        .form-actions {
+            margin-top: 20px;
+        }
+
+        .continue-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .continue-btn:hover {
+            background-color: #3e8e41;
+        }
+
+        .socialaccount-login {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .socialaccount-login a {
+            text-decoration: none;
+            color: #333;
+            padding: 5px 10px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .socialaccount-login a:hover {
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
+
+    <div class="container">
+        
+        {% if process == "connect" %}
+            <div class="connect-heading">
+                <h1>{% blocktrans with provider.name as provider %}Connect {{ provider }}{% endblocktrans %}</h1>
+            </div>
+            <p class="connect-info">
+                {% blocktrans with provider.name as provider %}You are about to connect a new third-party account from {{ provider }}.{% endblocktrans %}
+            </p>
+        {% else %}
+            <div class="signin-heading">
+                <h1>{% blocktrans with provider.name as provider %}Sign In Via {{ provider }}{% endblocktrans %}</h1>
+            </div>
+            <p class="signin-info">
+                {% blocktrans with provider.name as provider %}You are about to sign in using a third-party account from {{ provider }}.{% endblocktrans %}
+            </p>
+        {% endif %}
+
+        <div class="form-container">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-actions">
+                    <button type="submit" class="continue-btn">{% trans "Continue" %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

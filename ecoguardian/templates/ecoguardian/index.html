@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+{% load socialaccount %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EcoGuardian</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            font-family: 'Montserrat', sans-serif;
+            height: 100%;
+            margin: 0;
+            background-color: #c4df9b; /* Light green background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100%;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff; /* White container background */
+            border-radius: 15px; /* Rounded corners */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Soft shadow */
+            padding: 40px;
+            width:400px;
+            max-width: 400px; /* Limit container width */
+        }
+        .typewriter {
+            display: inline-block;
+            overflow: hidden;
+            border-right: .2em solid #026537; /* Adjust this color as needed */
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .3em;
+            animation: typing 3s steps(20, end), blink-caret .7s step-end infinite;
+            height: 5em;
+        }
+        @keyframes typing {
+            from {
+                width: 0
+            } 
+            to {
+                width: 70%
+            }
+        }
+
+        @keyframes blink-caret {
+            from, to {
+                border-color: transparent
+            }
+            50% {
+                border-color: #026537; /* Adjust this color as needed */
+            }
+        }
+
+        h1 {
+            color: #026537; /* Dark green heading */
+        }
+        h2 {
+            color: #026537;
+            font-size: 20px;
+        }
+
+        p {
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .button-style {
+            display: inline-block;
+            padding: 12px 24px; /* Larger button padding */
+            background-color: #70ad47; /* Dark green button */
+            color: white;
+            text-decoration: none;
+            border-radius: 30px; /* Round button corners */
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-style:hover {
+            background-color: #4e7d3e; /* Darker green on hover */
+        }
+
+        .status {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .login-box {
+            margin: 20px;
+            padding-bottom: 20px;
+            /* background-color: black; */
+        }
+        .welcome-box {
+            margin: 20px;
+            padding-bottom: 20px;
+            /* background-color: black; */
+        }
+
+        footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #c4df9b; /* Light green footer background */
+            color: #555; /* Darker text color */
+            text-align: center;
+            padding: 10px;
+            z-index: 0;
+        }
+
+        .signup-link {
+            text-decoration: underline;
+            color: #70ad47;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            margin-top: 10px;
+            font-size: 12px; /* Smaller font size */
+        }
+
+        .signup-link:hover {
+            color: #4e7d3e;
+        }
+    
+    </style>
+</head>
+<body>
+    <div class="container">
+            <h2>Welcome to</h2>
+        <div class="typewriter">
+            <h1>EcoGuardian</h1>
+        </div>
+        <!-- <h1>EcoGuardian</h1> -->
+        {% if user.is_authenticated %}
+            <div class="welcome-box">
+                <div class="status">
+                    {% if user.groups %}
+                        {% for group in user.groups.all|slice:":1" %}
+                            {% if group.name == "site_admin" %}
+                                Status: Site Admin
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <p>Welcome, {{ user.first_name }}!</p>
+                <a href="/ecoguardian/main/" class="button-style">Go to the main page</a>
+            </div>
+        {% else %}
+            <div class="login-box">
+                <a href="{% provider_login_url 'google' %}" class="button-style">Login With Google</a><br><br>
+                <a href="/ecoguardian/main/" class="button-style">Login Anonymously</a>
+            </div>
+        {% endif %}
+    </div>
+    {% include 'footer.html' %}
+</body>
+</html>

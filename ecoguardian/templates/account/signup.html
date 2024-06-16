@@ -1,0 +1,110 @@
+{% load allauth i18n %}
+
+{% block content %}
+    <style>
+        body, html {
+            font-family: 'Montserrat', sans-serif;
+            height: 100%;
+            margin: 0;
+            background-color: #c4df9b; /* Light green background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100%;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff; /* White container background */
+            border-radius: 15px; /* Rounded corners */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Soft shadow */
+            padding: 40px;
+            width: 400px;
+            max-width: 80%; /* Limit container width */
+        }
+
+        h1 {
+            color: #026537; /* Dark green heading */
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .button-style {
+            display: inline-block;
+            padding: 12px 24px; /* Larger button padding */
+            background-color: #70ad47; /* Dark green button */
+            color: white;
+            text-decoration: none;
+            border-radius: 30px; /* Round button corners */
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .button-style:hover {
+            background-color: #4e7d3e; /* Darker green on hover */
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="password"]:focus {
+            border-color: #70ad47; /* Dark green border color on focus */
+        }
+
+        .form-actions {
+            text-align: center;
+        }
+
+    </style>
+
+    <div class="container">
+        <h1>Sign Up</h1>
+        <p>Already have an account? Then please <a href="{{ login_url }}">sign in</a>.</p>
+        {% url 'account_signup' as action_url %}
+        <form method="post" action="{{ action_url }}">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.username.label_tag }}
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                {{ form.email.label_tag }}
+                {{ form.email }}
+            </div>
+            <div class="form-group">
+                {{ form.password1.label_tag }}
+                {{ form.password1 }}
+            </div>
+            <div class="form-group">
+                {{ form.password2.label_tag }}
+                {{ form.password2 }}
+            </div>
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            <div class="form-actions">
+                <button type="submit" class="button-style">Sign Up</button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

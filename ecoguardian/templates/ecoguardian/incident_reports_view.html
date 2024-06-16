@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+   <!-- Required meta tags -->
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+   <!-- Bootstrap CSS -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+
+   <title>Incident Reports</title>
+   <style>
+   body {
+           font-family: 'Montserrat', sans-serif; /* Use Montserrat font */
+           background-color: #c4df9b; /* Light green background color */
+           padding-bottom: 60px; /* Add padding at the bottom to prevent overlap with footer */
+           min-height: 100vh; /* Set minimum height to 100% of the viewport height */
+           position: relative; /* Ensure the footer stays at the bottom relative to the body */
+           margin: 0;
+           padding: 0;
+       }
+
+       .header {
+           background-color: #026537; /* Dark green header */
+           color: white; /* White text color */
+           padding: 10px 20px; /* Add padding to header */
+           display: flex; /* Use flexbox for header content */
+           justify-content: space-between; /* Space items evenly */
+           align-items: center; /* Center items vertically */
+           margin-bottom: 20px; /* Add bottom margin to separate header from content */
+       }
+
+       .header h1 {
+       margin: 0; /* Remove default margin for h1 */
+       font-weight: bold; /* Make the text bold */
+       font-size: 2em; /* Set the font size to 1.5em (adjust as needed) */
+       line-height: 2.5; /* Set the line height to 1.5 */
+       }
+       .header a {
+           color: white; /* White text color for links */
+           text-decoration: none; /* Remove underline from links */
+           transition: color 0.3s ease; /* Smooth color transition */
+           font-weight: bold; /* Make the text bold */
+           font-size: 0.9em; /* Set the font size to 0.9em (adjust as needed) */
+       }
+       .header a:hover {
+           color: #70ad47; /* Light green on hover */
+       }
+
+       .container {
+           margin-top: 20px; /* Add margin at the top */
+           padding: 20px; /* Add padding */
+       }
+       .container.my-5 h2.text-center.mb-4 {
+       color: #026537; /* Dark green heading */
+           margin-bottom: 20px;
+           font-size: 1.5em; /* Set the font size to 1.5em */
+           font-weight: bold; /* Make the text bold */
+           margin-top: 0;
+   }
+       .report-card {
+           margin-bottom: 20px;
+           border-radius: 1rem;
+       }
+       .report-card:hover {
+           box-shadow: 0 2px 10px 5px rgba(2, 101, 55, 0.5);
+           transition: box-shadow 0.3s ease-in-out;
+       }
+       .card-title {
+           color: #026537;
+       }
+       .evidence-iframe, .evidence-pdf {
+           width: 100%;
+           height: 300px; /* Adjust the height as needed */
+           border: none;
+       }
+
+       .evidence-image {
+           max-width: 100%;
+           height: auto;
+       }
+       button[type="home"]{
+           background-color: #4CAF50; /* Set button background color */
+           color: #fff; /* Set button text color */
+           border: none; /* Remove button border */
+           padding: 10px 17px; /* Add padding to button */
+           border-radius: 5px; /* Add border radius to button */
+           cursor: pointer; /* Add cursor pointer */
+           font-size: 0.9em;
+       }
+       button[type="home"]:hover{
+           background-color: #3e8e41; /* Change button background color on hover */
+       }
+       button[type="logout"]{
+           background-color: #4CAF50; /* Set button background color */
+   color: #fff; /* Set button text color */
+   border: none; /* Remove button border */
+   padding: 10px 17px; /* Add padding to button */
+   border-radius: 5px; /* Add border radius to button */
+   cursor: pointer; /* Add cursor pointer */
+   font-size: 0.9em;
+       }
+       button[type="logout"]:hover{
+           background-color: #3e8e41; /* Change button background color on hover */
+       }
+       footer {
+    position: relative; /* Change to relative */
+    clear: both; /* Clear floats */
+    margin-top: 20px; /* Add margin at the top to separate from the content */
+    background-color: transparent;
+    color: grey;
+    text-align: left;
+    padding: 10px;
+}
+
+   </style>
+</head>
+<body>
+<div class="header">
+       <h1>EcoGuardian</h1>
+<a href="/ecoguardian/main/"><button type="home" style="margin-left: 1021px;">Home</button></a>
+   <a href="/accounts/logout/"><button type="logout">Logout</button></a>
+   </div>
+   <div class="container my-5">
+       <h2 class="text-center mb-4">Incident Reports</h2>
+       <div class="row">
+           {% for report in incident_reports %}
+           <div class="col-md-4">
+               <div class="card report-card" onclick="window.location.href='{% url 'ecoguardian:incident_report_detail' report.id %}';" style="cursor: pointer;">
+                   <div class="card-body">
+                       <h5 class="card-title">{{ report.incident_category.name|slice:"2:-2" }}</h5>
+                       <p class="card-text"><strong>Description:</strong> {{ report.description }}</p>
+                       <p class="card-text"><strong>Location:</strong> {{ report.location }}</p>
+                       <p class="card-text"><strong>Date:</strong> {{ report.date }}</p>
+                       <p class="card-text"><strong>Status:</strong> {{ report.status }}</p>
+                       <p class="card-text"><strong>User:</strong> {{ report.user }}</p>
+
+                       {% if report.evidences.all %}
+                           {% with report.evidences.all|first as first_evidence %}
+                               {% if first_evidence.file.url|slice:"-3:" == "txt" %}
+                                   <iframe src="{{ first_evidence.file.url }}" class="evidence-iframe"></iframe>
+                               {% elif first_evidence.file.url|slice:"-3:" == "jpg" or first_evidence.file.url|slice:"-4:" == "jpeg" or first_evidence.file.url|slice:"-3:" == "png" %}
+                                   <img src="{{ first_evidence.file.url }}" alt="Evidence Image" class="evidence-image">
+                               {% elif first_evidence.file.url|slice:"-3:" == "pdf" %}
+                                   <embed src="{{ first_evidence.file.url }}" type="application/pdf" class="evidence-pdf">
+                               {% else %}
+                                   <a href="{{ first_evidence.file.url }}" class="btn btn-outline-success">View Evidence</a>
+                               {% endif %}
+                               {% if report.evidences.count > 1 %}
+                                   <a href="{% url 'ecoguardian:incident_report_detail' report.id %}" class="btn btn-outline-secondary mt-2">More Evidence</a>
+                               {% endif %}
+                           {% endwith %}
+                       {% endif %}
+
+                       {% if report.admin_description %}
+                           <p class="card-text"><strong>Admin Status Note: </strong> {{ report.admin_description }}</p>
+                       {% else %}
+                           <p class="card-text"><strong>Admin Status Note: </strong> None yet</p>
+                       {% endif %}
+                   </div>
+               </div>
+           </div>
+           {% endfor %}
+
+       </div>
+
+   </div>
+
+   <footer class="footer">
+        {% include 'footer.html' %}
+    </footer>
+</body>
+</html>

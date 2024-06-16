@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Incident Report Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif; /* Use Montserrat font */
+            background-color: #c4df9b; /* Light green background */
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin-top: 50px; /* Adjust top margin for form */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h2 {
+            color: #026537; /* Dark green heading */
+            margin-bottom: 20px;
+        }
+        
+        form {
+            background-color: #ffffff; /* White form background */
+            padding: 20px; /* Add padding to form */
+            border-radius: 20px; /* Rounded corners */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            width: 80%; /* Set form width */
+            max-width: 500px; /* Limit maximum form width */
+        }
+        button[type="submit"], button[type="home"], button[type="logout"] {
+            background-color: #4CAF50; /* Dark green button */
+            color: white; /* White text color */
+            border: none; /* Remove button border */
+            padding: 10px 20px; /* Add padding to button */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Add cursor pointer */
+            margin-top: 20px; /* Add top margin */
+            transition: background-color 0.3s ease; /* Smooth color transition */
+        }
+        button[type="submit"]:hover, button[type="home"]:hover, button[type="logout"]:hover {
+            background-color: #3e8e41; /* Darker green on hover */
+        }
+        footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: transparent;
+            color: #555; /* Darker text color */
+            text-align: left;
+            padding: 10px;
+            z-index: 0;
+        }
+        .navbar {
+            background-color: #026537; /* Dark green navbar */
+            color: white; /* White text color */
+            padding: 10px 20px; /* Add padding to navbar */
+            display: flex; /* Use flexbox for navbar items */
+            justify-content: space-between; /* Space items evenly */
+            align-items: center; /* Center items vertically */
+        }
+        .navbar a {
+            color: white; /* White text color for links */
+            text-decoration: none; /* Remove underline from links */
+            transition: color 0.3s ease; /* Smooth color transition */
+        }
+        .navbar a:hover {
+            color: #70ad47; /* Light green on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div>
+            <h1>EcoGuardian</h1>
+        </div>
+        <div>
+            <a href="/ecoguardian/main/"><button type="home">Home</button></a>
+            <a href="/accounts/logout/"><button type="logout">Logout</button></a>
+        </div>
+    </div>
+    <div class="container">
+        <h2>Incident Report</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    {% include 'footer.html' %}
+</body>
+</html>

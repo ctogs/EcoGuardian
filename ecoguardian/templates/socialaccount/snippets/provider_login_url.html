@@ -1,0 +1,23 @@
+{% extends "base.html" %}  <!-- Or your base template if you have one -->
+
+{% block content %}
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Use full viewport height */
+    }
+    .login-content {
+        text-align: center; /* Center the inner content */
+    }
+</style>
+
+<div class="container">
+    <div class="login-content">
+        <!-- Your login form or content goes here -->
+        <h2>Login with Google</h2>
+        <a href="{% url 'socialaccount_begin' 'google' %}">Google Login</a>
+    </div>
+</div>
+{% endblock %}
