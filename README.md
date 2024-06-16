@@ -1,9 +1,8 @@
 # EcoGuardian
 
-__Team:__ A-12
-__Team Names:__ Anvitha Bandam, Collin Togher, Jimmy Li, Kelly Gu, Tianze Ren
+__Contributors:__ Collin Togher, Anvitha Bandam, Jimmy Li, Kelly Gu, Tianze Ren
 
-Introducing our GROUNDbreaking environmental whistleblower app! Have you witnessed any type of pollution? Animal endangerment? Cases of disasterous weather? Or any other kinds of environmental incidents/concers? With our user-friendly platform, reporting these issues is now easier than ever. Submit a report, and let our admin work through these issues.
+Introducing our GROUNDbreaking environmental whistleblower app! Have you witnessed any type of pollution? Animal endangerment? Cases of disasterous weather? Or any other kinds of environmental incidents/concers? With our user-friendly platform, reporting these issues is now easier than ever. Submit a report, and let our admin work through these issues. Created and deployed using Django, AWS S3, and Heroku.
 
 Created in Spring 2024 for CS 3240 (Advanced Software Development) at UVA
 
