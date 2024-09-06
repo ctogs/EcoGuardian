@@ -38,7 +38,7 @@ DEBUG = True
 # to list the expected hostnames explicitly to prevent HTTP Host header attacks. See:
 # https://docs.djangoproject.com/en/5.0/ref/settings/#std-setting-ALLOWED_HOSTS
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'environment-whistle-blower-9801f3048520.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'ecoguardian-4b38dddc468c.herokuapp.com']
 
 
 # Application definition
